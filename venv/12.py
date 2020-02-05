@@ -13,6 +13,6 @@ while flag:
         for k in range(2, int(j / 2) + 1):
             if j % k == 0:
                 i += 1
-    if i + 2 > 500:
+    if i + 2 > 300:
         print(j)
         flag = False
