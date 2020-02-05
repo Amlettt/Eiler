@@ -1,6 +1,7 @@
 import math
-i=2031120
-j=2031121
+
+i = 2031120
+j = 2031121
 # i = 0
 # j = 1
 m = 2
@@ -15,4 +16,4 @@ while flag:
                 i += 1
     if i + 2 > 100:
         print(j)
-        flag = False
+        flag = False 
