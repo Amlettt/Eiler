@@ -90,3 +90,11 @@ print('Сумма аргументов powersum = {}'.format(powersum(2, 3, 4)))
 # exec и eval
 exec('print("Здравствуй, Мир!")')  # выполняет команду записанную как строка
 print(eval('2*3'))  # считает выражение записанное как строка
+
+# списки
+list_ = [1, 2, 34, 1]
+# list_[2], list_[3] = list_[3], list_[2]
+print('list_ = {}'.format(list_))
+list_[2::].sort()  # Сортировка части списка
+print(list_)
+print(list_.index(34))

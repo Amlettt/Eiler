@@ -5,90 +5,43 @@
 
 import math
 
-list_number = [i for i in range(3)]
-# list_number.reverse()
-count_iter = 1
 
-# for i in range(2, 4):
-#     for j in range(1, i+1):
-#         if j > j+1:
-#             count_iter += 1
+def shift(lst, indx, indx1, indx2):  # сдвиг чисел, меняем местами (список, размер списка, что меняем, на что меняем)
+    lst[indx1], lst[indx2] = lst[indx2], lst[indx1]  # замена чисел местами
+    if indx1 < indx - 1:  # сортировка после замены если заменяемый индекс был дальше предпоследнего числа
+        lst[(indx1+1)::] = sorted(lst[indx1+1::])
+    return lst
 
 
-def shift(lst, indx):
-    lst.append(lst.pop(indx))
+list_number = [i for i in range(10)]  # создаем список
+count_iter = 1  # счетчик итераций
 
-
-def change(lst, indx):
-    lst.insert(indx, lst.pop(indx + 1))
-
-
-print("{0} = {1}".format(count_iter, list_number))
-
-# for i in range(len(list_number)-1, 0, -1):
-#     index = i - 1
-#     list_number_copy = list_number.copy()
-#
-#     for j in range(math.factorial(len(list_number)-i)-1):
-#
-#         if list_number_copy[i] > list_number_copy[i-1]:
-#             shift(list_number_copy, index)
-#             count_iter += 1
-#             print("{0} = {1}".format(count_iter, list_number_copy))
-#             index -= 1
-#         else:
-#             change(list_number_copy, index)
-#             count_iter += 1
-#             print("{0} = {1}".format(count_iter, list_number_copy))
-
-
-pointer = len(list_number) - 2
-index = pointer
 flag = True
+len_list = len(list_number)-1  # переменная для работы с индексом списка
 
-for i in range(1, len(list_number)-1):
-    list_number_copy = list_number.copy()
-    j = 0
-
-    while pointer >= 0:
-        if flag:
-            change(list_number_copy, index)
-            count_iter += 1
-            flag = False
-            print("{0} = {1}".format(count_iter, list_number_copy))
-
-            if index == len(list_number) - 2:
-                pointer -= 1
-                index = pointer
-                flag = True
-                continue
-            else:
-                index += 1
-                continue
-
-
-        # if list_number_copy[index] > list_number_copy[index + 1]:
-        #     shift(list_number_copy, index)
-        #     count_iter += 1
-        #     print("{0} = {1}".format(count_iter, list_number_copy))
-        #     index -= 1
-        # else:
-        #     change(list_number_copy, index)
-        #     count_iter += 1
-        #     print("{0} = {1}".format(count_iter, list_number_copy))
-
-        j += 1
-
+while flag:
+    flags = True
+    i = 0
+    while flags:
+        i += 1
         if count_iter == 1000000:
-            print(list_number_copy)
+            print('Милионная перестановка = {}'.format(list_number))
+            flag = False
             break
-
-
-            
-
-
-
-
-
-
-
+        # сравниваем последнее и прдпоследнее если последнее больше то меняем местами
+        if list_number[len_list-i] < list_number[len_list]:
+            count_iter += 1
+            list_number = shift(list_number, len_list, len_list-i, len_list)
+            print('{0} = {1}'.format(count_iter, list_number))
+            break
+        # если итый индекс меньше чем одно из оставшихся чисел списка, то находим число которое следующее после него
+        # и менеям их местами
+        if list_number[len_list-i] < max(list_number[(len_list-i+1)::]) and i <= len_list:
+            for n in sorted(list_number[(len_list - i + 1)::]):  # отсортировали часть списка и его итерируем
+                if n > list_number[len_list-i]:  # если число из отсор. списка больше чем итое будем их менять
+                    min_ = list_number.index(n)
+                    break
+            list_number = shift(list_number, len_list, len_list - i, min_)
+            count_iter += 1
+            print('{0} = {1}'.format(count_iter, list_number))
+            break
